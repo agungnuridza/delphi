@@ -1,0 +1,208 @@
+unit Unit2;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, Buttons, Grids, DBGrids, jpeg, ExtCtrls, ComCtrls, DB,
+  ADODB, ExtDlgs;
+
+type
+  TForm2 = class(TForm)
+    Label1: TLabel;
+    Label2: TLabel;
+    Eno: TEdit;
+    Label3: TLabel;
+    Label4: TLabel;
+    Label5: TLabel;
+    Label6: TLabel;
+    Label7: TLabel;
+    Label8: TLabel;
+    Label9: TLabel;
+    Label10: TLabel;
+    Label11: TLabel;
+    Label12: TLabel;
+    Label13: TLabel;
+    Label14: TLabel;
+    Label15: TLabel;
+    Label16: TLabel;
+    Enama: TEdit;
+    CBjurusan: TComboBox;
+    CBkelas: TComboBox;
+    DTpd: TDateTimePicker;
+    Enotelp: TEdit;
+    Malamat: TMemo;
+    Easal: TEdit;
+    Emtk: TEdit;
+    Eindo: TEdit;
+    Einggris: TEdit;
+    Ekejuruan: TEdit;
+    Eakhir: TEdit;
+    Eket: TEdit;
+    Image1: TImage;
+    DBGrid1: TDBGrid;
+    BitBtn1: TBitBtn;
+    BitBtn2: TBitBtn;
+    BitBtn4: TBitBtn;
+    BitBtn5: TBitBtn;
+    Ecari: TEdit;
+    CBpildata: TComboBox;
+    Button1: TButton;
+    BitBtn3: TBitBtn;
+    BitBtn6: TBitBtn;
+    BitBtn7: TBitBtn;
+    ADOConnection1: TADOConnection;
+    ADOQuery1: TADOQuery;
+    DataSource1: TDataSource;
+    Label17: TLabel;
+    Button2: TButton;
+    Button3: TButton;
+    OpenPictureDialog1: TOpenPictureDialog;
+    CBagama: TComboBox;
+    Label18: TLabel;
+    procedure BitBtn3Click(Sender: TObject);
+    procedure BitBtn6Click(Sender: TObject);
+    procedure BitBtn7Click(Sender: TObject);
+    procedure BitBtn4Click(Sender: TObject);
+    procedure BitBtn2Click(Sender: TObject);
+    procedure BitBtn1Click(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
+    procedure BitBtn5Click(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
+    procedure Button3Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form2: TForm2;
+  lokasi:String;
+implementation
+
+uses pendaftaranmaba, Unit3;
+
+{$R *.dfm}
+
+procedure TForm2.BitBtn3Click(Sender: TObject);
+begin
+Form1.Show;
+Form2.Hide;
+Form3.Hide;
+end;
+
+procedure TForm2.BitBtn6Click(Sender: TObject);
+begin
+Form1.Hide;
+Form2.Show;
+Form3.Hide;
+Form2.ADOQuery1.Close;
+Form2.ADOQuery1.Open;
+Malamat.Clear;
+end;
+
+procedure TForm2.BitBtn7Click(Sender: TObject);
+begin
+Form1.Hide;
+Form2.Hide;
+Form3.Show;
+Form3.ADOQuery2.Close;
+Form3.ADOQuery2.Open;
+end;
+
+procedure TForm2.BitBtn4Click(Sender: TObject);
+begin
+if BitBtn4.Caption = 'Edit' then
+begin
+Enama.Text:=ADOQuery1.FieldByName('Nama').AsString;
+CBagama.Text:=ADOQuery1.FieldByName('Agama').AsString;
+CBjurusan.Text:=ADOQuery1.FieldByName('Jurusan').AsString;
+CBkelas.Text:=ADOQuery1.FieldByName('Kelas').AsString;
+DTpd.DateTime:=ADOQuery1.FieldByName('Tgl_Pendaftaran').AsDateTime;
+Enotelp.Text:=ADOQuery1.FieldByName('No_Telp').AsString;
+Malamat.Text:=ADOQuery1.FieldByName('Alamat').AsString;
+Easal.Text:=ADOQuery1.FieldByName('Asal_Sekolah').AsString;
+Emtk.Text:=ADOQuery1.FieldByName('Nilai_MTK').AsString;
+Eindo.Text:=ADOQuery1.FieldByName('Nilai_Bindo').AsString;
+Einggris.Text:=ADOQuery1.FieldByName('Nilai_Binggris').AsString;
+Ekejuruan.Text:=ADOQuery1.FieldByName('Nilai_Kejuruan').AsString;
+Eakhir.Text:=ADOQuery1.FieldByName('Nilai_Akhir').AsString;
+Eket.Text:=ADOQuery1.FieldByName('Keterangan').AsString;
+lokasi:=ADOQuery1.FieldByName('Foto').Asstring;
+BitBtn4.Caption := 'Update';
+
+end
+else if BitBtn4.Caption ='Update' then
+begin
+ADOQuery1.Edit;
+ADOQuery1.FieldByName('Nama').AsString:=Enama.Text;
+ADOQuery1.FieldByName('Agama').AsString:=CBagama.Text;
+ADOQuery1.FieldByName('Jurusan').AsString:=CBjurusan.Text;
+ADOQuery1.FieldByName('Kelas').AsString:=CBkelas.Text;
+ADOQuery1.FieldByName('Tgl_Pendaftaran').AsDateTime:=DTpd.DateTime;
+ADOQuery1.FieldByName('No_Telp').AsString:=Enotelp.Text;
+ADOQuery1.FieldByName('Alamat').AsString:=Malamat.Text;
+ADOQuery1.FieldByName('Asal_Sekolah').AsString:=Easal.Text;
+ADOQuery1.FieldByName('Nilai_MTK').AsString:=Emtk.Text;
+ADOQuery1.FieldByName('Nilai_Bindo').AsString:=Eindo.Text;
+ADOQuery1.FieldByName('Nilai_Binggris').AsString:=Einggris.Text;
+ADOQuery1.FieldByName('Nilai_Kejuruan').AsString:=Eakhir.Text;
+ADOQuery1.FieldByName('Nilai_Akhir').AsString:=Ekejuruan.Text;
+ADOQuery1.FieldByName('Keterangan').AsString:=Eket.Text;
+
+ADOQuery1.Post;
+BitBtn4.Caption := 'Edit';
+end;
+end;
+procedure TForm2.BitBtn2Click(Sender: TObject);
+begin
+Close;
+end;
+
+procedure TForm2.BitBtn1Click(Sender: TObject);
+begin
+  ADOQuery1.Delete;
+  showmessage('Data Berhasil Dihapus');
+end;
+
+procedure TForm2.Button2Click(Sender: TObject);
+begin
+ADOQuery1.Close;
+ADOQuery1.Open;
+end;
+
+procedure TForm2.BitBtn5Click(Sender: TObject);
+begin
+Enama.Text:='';
+CBagama.Text:='';
+CBjurusan.Text:='';
+CBkelas.Text:='';
+Malamat.Text:='';
+Easal.Text:='';
+Emtk.Text:='';
+Eindo.Text:='';
+Einggris.Text:='';
+Ekejuruan.Text:='';
+Eakhir.Text:='';
+Eket.Text:='';
+
+end;
+
+procedure TForm2.Button1Click(Sender: TObject);
+begin
+ADOQuery1.Active;
+ADOQuery1.SQL.Clear;
+ADOQuery1.SQL.Text:='select*from(tb_pendaftaran)'+QuotedStr(Ecari.Text+'%');
+if CBpildata.ItemIndex=0 then ADOQuery1.SQL.Text:='select*from(tb_pendaftaran) where (Nama) like' +QuotedStr(Ecari.Text+'%')
+else if CBpildata.ItemIndex=1 then ADOQuery1.SQL.Text:='select*from(tb_pendaftaran) where (No_Telp) like' +QuotedStr(Ecari.Text+'%');
+ADOQuery1.Open;
+end;
+
+procedure TForm2.Button3Click(Sender: TObject);
+begin
+ if OpenPictureDialog1.Execute then
+    lokasi:=OpenPictureDialog1.FileName;
+  Image1.Picture.LoadFromFile(lokasi);
+end;
+end.
